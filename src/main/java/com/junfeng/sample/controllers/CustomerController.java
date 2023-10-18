@@ -27,16 +27,22 @@ public class CustomerController {
 
     @GetMapping
     public List<Customer> getCustomers(){
+        logger.info("[GET] api/v1/customer - Start");
+
         return customerService.getCustomers();
     }
 
     @PostMapping
     public void registerNewCustomer(@RequestBody Customer customer){
+
+        logger.info("[POST] api/v1/customer - Start");
         customerService.addNewCustomer(customer);
     }
 
     @DeleteMapping(path = "{customerId}")
     public void deleteCustomer(@PathVariable("customerId") Long customerId){
+
+        logger.info("[DELETE] api/v1/customer - Start");
         customerService.deleteCustomer(customerId);
     }
 
@@ -46,11 +52,14 @@ public class CustomerController {
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String email
     ){
+        logger.info("[PUT] api/v1/customer/"+ String.valueOf(customerId) +" - Start");
         customerService.updateCustomer(customerId,name,email);
     }
 
     @GetMapping("/list")
     public Page<Customer> getCustomerList(@RequestParam(required = true) int page){
+
+        logger.info("[GET] api/v1/customer/list - Start");
         return customerService.getCustomerList(page);
     }
 }
