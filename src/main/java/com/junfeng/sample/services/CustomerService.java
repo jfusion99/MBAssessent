@@ -4,6 +4,9 @@ import com.junfeng.sample.models.Customer;
 import com.junfeng.sample.repositories.CustomerRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PutMapping;
 
@@ -62,5 +65,26 @@ public class CustomerService {
             }
             customer.setEmail(email);
         }
+    }
+
+    public Page<Customer> getCustomerList(int pageNumber) {
+
+        int size = 10;
+
+        // Pageable object
+        Pageable pageable = PageRequest.ofSize(size);
+        Page<Customer> page = customerRepository.findAll(pageable);
+
+        //Total Page
+        int totalPage = page.getTotalPages();
+
+        if(pageNumber > totalPage){
+            throw new IllegalStateException("Page number have no data.");
+        }else{
+            pageable = PageRequest.of(pageNumber-1,size);
+            page = customerRepository.findAll(pageable);
+        }
+
+        return page;
     }
 }
