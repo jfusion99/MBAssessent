@@ -1,14 +1,15 @@
 package com.junfeng.sample.services;
 
-import com.junfeng.sample.models.Customer;
+import com.junfeng.sample.advice.exception.CustomerNotFoundException;
+import com.junfeng.sample.advice.exception.DuplicateCustomerException;
+import com.junfeng.sample.dto.CustomerRequest;
+import com.junfeng.sample.entity.Customer;
 import com.junfeng.sample.repositories.CustomerRepository;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PutMapping;
 
 import java.util.List;
 import java.util.Objects;
@@ -28,27 +29,32 @@ public class CustomerService {
         return customerRepository.findAll();
     }
 
-    public void addNewCustomer(Customer customer) {
+    public Customer addNewCustomer(CustomerRequest customerRequest) throws DuplicateCustomerException {
+
+        Customer customer = new Customer(customerRequest.getName(), customerRequest.getEmail(),
+                customerRequest.getContactNo(),customerRequest.getDateJoined());
+
         Optional<Customer> customerOptional =
                 customerRepository.findCustomerByEmail(customer.getEmail());
 
         if(customerOptional.isPresent()){
-            throw new IllegalStateException("Email had been registered");
+            throw new DuplicateCustomerException("Email had been registered");
         }
-        customerRepository.save(customer);
+        return customerRepository.save(customer);
     }
 
-    public void deleteCustomer(Long customerId) {
+    public void deleteCustomer(Long customerId) throws CustomerNotFoundException {
+
         boolean exists = customerRepository.existsById(customerId);
 
         if(!exists){
-            throw new IllegalStateException("Customer with ID " + customerId + " does not exist");
+            throw new CustomerNotFoundException("Customer with ID " + customerId + " does not exist");
         }
         customerRepository.deleteById(customerId);
     }
 
-    @Transactional
     public void updateCustomer(Long customerId, String name, String email) {
+
         Customer customer = customerRepository.findById(customerId).orElseThrow(
                 ()-> new IllegalStateException("Customer with ID " + customerId + " does not exist")
         );

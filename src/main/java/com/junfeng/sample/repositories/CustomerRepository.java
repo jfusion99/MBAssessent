@@ -1,8 +1,7 @@
 package com.junfeng.sample.repositories;
 
-import com.junfeng.sample.models.Customer;
+import com.junfeng.sample.entity.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;

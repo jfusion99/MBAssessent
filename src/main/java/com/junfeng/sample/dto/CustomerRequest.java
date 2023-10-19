@@ -1,54 +1,31 @@
-package com.junfeng.sample.models;
+package com.junfeng.sample.dto;
 
-import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 
 import java.time.LocalDate;
 
-@Entity
-@Table
-public class Customer {
+public class CustomerRequest {
 
-    @Id
-    @SequenceGenerator(
-            name = "cust_sequence",
-            sequenceName = "cust_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "cust_sequence"
-    )
-
-    private Long id;
+    @NotBlank(message="filter name cannot be blank")
     private String name;
+    @Email (message = "Invalid email address")
     private String email;
+    @NotNull
+    @Pattern(regexp = "^\\d{10}$", message = "Invalid contact no format")
     private String contactNo;
     private LocalDate dateJoined;
 
-    public Customer() {
+    public CustomerRequest() {
     }
 
-    public Customer(Long id, String name, String email, String contactNo, LocalDate dateJoined) {
-        this.id = id;
+    public CustomerRequest(String name, String email, String contactNo, LocalDate dateJoined) {
         this.name = name;
         this.email = email;
         this.contactNo = contactNo;
         this.dateJoined = dateJoined;
-    }
-
-    public Customer(String name, String email, String contactNo, LocalDate dateJoined) {
-        this.name = name;
-        this.email = email;
-        this.contactNo = contactNo;
-        this.dateJoined = dateJoined;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -85,9 +62,8 @@ public class Customer {
 
     @Override
     public String toString() {
-        return "Customer{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
+        return "CustomerRequest{" +
+                "name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", contactNo='" + contactNo + '\'' +
                 ", dateJoined=" + dateJoined +
