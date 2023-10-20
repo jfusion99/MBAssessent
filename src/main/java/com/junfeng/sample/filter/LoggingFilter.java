@@ -32,6 +32,7 @@ public class LoggingFilter extends OncePerRequestFilter {
         String requestBody = getStringValue(contentCachingRequestWrapper.getContentAsByteArray(),request.getCharacterEncoding());
         String responseBody = getStringValue(contentCachingResponseWrapper.getContentAsByteArray(),response.getCharacterEncoding());
 
+        //Print Restful API request and response details to system log
         logger.info("Restful API Logs: METHOD NAME={}; REQUEST URI={}; REQUEST BODY={}; RESPONSE CODE={};RESPONSE BODY={}; TIME TAKEN={}",
                 request.getMethod(),request.getRequestURI(),requestBody,response.getStatus(),responseBody,timeTaken);
 

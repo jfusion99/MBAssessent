@@ -5,42 +5,33 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table
+@Table (name="CUSTOMER_INFO")
 public class Customer {
 
     @Id
-    @SequenceGenerator(
-            name = "cust_sequence",
-            sequenceName = "cust_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "cust_sequence"
-    )
-
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
     private String email;
     private String contactNo;
-    private LocalDate dateJoined;
+    private LocalDate dob;
 
     public Customer() {
     }
 
-    public Customer(Long id, String name, String email, String contactNo, LocalDate dateJoined) {
+    public Customer(Long id, String name, String email, String contactNo, LocalDate dob) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.contactNo = contactNo;
-        this.dateJoined = dateJoined;
+        this.dob = dob;
     }
 
-    public Customer(String name, String email, String contactNo, LocalDate dateJoined) {
+    public Customer(String name, String email, String contactNo, LocalDate dob) {
         this.name = name;
         this.email = email;
         this.contactNo = contactNo;
-        this.dateJoined = dateJoined;
+        this.dob = dob;
     }
 
     public Long getId() {
@@ -75,12 +66,12 @@ public class Customer {
         this.contactNo = contactNo;
     }
 
-    public LocalDate getDateJoined() {
-        return dateJoined;
+    public LocalDate getDob() {
+        return dob;
     }
 
-    public void setDateJoined(LocalDate dateJoined) {
-        this.dateJoined = dateJoined;
+    public void setDob(LocalDate dob) {
+        this.dob = dob;
     }
 
     @Override
@@ -90,7 +81,7 @@ public class Customer {
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", contactNo='" + contactNo + '\'' +
-                ", dateJoined=" + dateJoined +
+                ", dob=" + dob +
                 '}';
     }
 }

@@ -1,8 +1,8 @@
 package com.junfeng.sample.controllers;
 
-//import com.junfeng.sample.repositories.CustomerRepositories;
 import com.junfeng.sample.advice.exception.CustomerNotFoundException;
 import com.junfeng.sample.advice.exception.DuplicateCustomerException;
+import com.junfeng.sample.advice.exception.PageNotFoundException;
 import com.junfeng.sample.dto.CustomerRequest;
 import com.junfeng.sample.entity.Customer;
 import com.junfeng.sample.services.CustomerService;
@@ -26,34 +26,39 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
+    //Function to fetch all customers
     @GetMapping
     public ResponseEntity<List<Customer>> getCustomers(){
 
         return ResponseEntity.ok(customerService.getCustomers());
     }
 
+    //Function to add new customer
     @PostMapping
     public ResponseEntity<Customer> registerNewCustomer(@RequestBody @Valid CustomerRequest customer) throws DuplicateCustomerException {
 
         return new ResponseEntity<>(customerService.addNewCustomer(customer), HttpStatus.CREATED);
     }
 
+    //Function to delete existing customer
     @DeleteMapping(path = "{customerId}")
     public void deleteCustomer(@PathVariable("customerId") Long customerId) throws CustomerNotFoundException {
         customerService.deleteCustomer(customerId);
     }
 
+    //Function to update customer's details
     @PutMapping(path = "{customerId}")
-    public void updateCustomer(
+    public Customer updateCustomer(
             @PathVariable("customerId") Long customerId,
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String email
-    ){
-        customerService.updateCustomer(customerId,name,email);
+    ) throws CustomerNotFoundException, DuplicateCustomerException {
+        return customerService.updateCustomer(customerId,name,email);
     }
 
+    //Function to fetch customer by pagination (10 customer per page)
     @GetMapping("/list")
-    public ResponseEntity<Page<Customer>> getCustomerList(@RequestParam(required = true) int page){
+    public ResponseEntity<Page<Customer>> getCustomerList(@RequestParam(required = true) int page) throws PageNotFoundException {
 
         return ResponseEntity.ok(customerService.getCustomerList(page));
     }

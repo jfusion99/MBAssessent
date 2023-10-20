@@ -13,6 +13,7 @@ import java.util.List;
 @RequestMapping(path = "api/v1/movies")
 public class MovieController {
 
+    //Function to fetch data from third party API
     @GetMapping
     public List<Object> getMovies(){
 
