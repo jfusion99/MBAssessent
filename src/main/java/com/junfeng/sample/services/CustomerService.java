@@ -32,6 +32,7 @@ public class CustomerService {
     }
 
     //Function to fetch all customers from database
+    @Transactional(rollbackOn = Exception.class)
     public List<Customer> getCustomers(){
         return customerRepository.findAll();
     }
