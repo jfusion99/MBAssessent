@@ -11,7 +11,7 @@ This is a sample Spring Boot application.
   3. Update customer
   4. Delete customer
   5. Get customers with pagination
-  6. Get movies (Nest API)
+  6. Get movies (Nested API)
 
 ## Restful API
  
