@@ -12,6 +12,7 @@ This is a sample Spring Boot application.
   4. Delete customer
   5. Get customers with pagination
   6. Get movies (Nested API)
+* Postman collection : Click <a href= "https://www.postman.com/bold-satellite-731448/workspace/jun-feng/collection/27737093-ffdd7f5e-9506-4d8c-9c42-a37bc50bf2ee?action=share&creator=27737093">here</a> 
 
 ## Restful API
  
