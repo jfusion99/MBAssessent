@@ -52,8 +52,8 @@ This is a sample Spring Boot application.
 Request body :
 
     {
-        "name": "",
-        "email": "@gmail.com",
+        "name": "Ken",
+        "email": "ken@gmail.com",
         "contactNo": "0123456788",
         "dob": "2023-10-10",
         "address" : {
