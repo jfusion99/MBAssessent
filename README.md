@@ -92,31 +92,31 @@ Request body :
 
     `email=[string]`
 
-  * #### Response
-    * #### Success
-          Code : 200 Success
-          Content : 
-            {
-                "id": 1,
-                "name": "Jojo",
-                "email": "jojo@hotmail.com",
-                "contactNo": "0123456788",
-                "dob": "2023-10-10"
-            }
-    * #### Error
-          Code : 400 Bad Request
-          Content : 
-            {
-              "Error Input": "Email had been registered"
-            }
+* #### Response
+  * #### Success
+        Code : 200 Success
+        Content : 
+          {
+              "id": 1,
+              "name": "Jojo",
+              "email": "jojo@hotmail.com",
+              "contactNo": "0123456788",
+              "dob": "2023-10-10"
+          }
+  * #### Error
+        Code : 400 Bad Request
+        Content : 
+          {
+            "Error Input": "Email had been registered"
+          }
           
-          OR
+        OR
     
-          Code : 500 Internal Server Error
-          Content : 
-            {
-              "Error Message": "Customer with ID 200 does not exist"
-            }
+        Code : 500 Internal Server Error
+        Content : 
+          {
+            "Error Message": "Customer with ID 200 does not exist"
+          }
 
 ### iv. Delete customer
 
