@@ -2,6 +2,7 @@ package com.junfeng.sample.services;
 
 import com.junfeng.sample.advice.exception.CustomerNotFoundException;
 import com.junfeng.sample.advice.exception.DuplicateCustomerException;
+import com.junfeng.sample.advice.exception.InvalidAddressException;
 import com.junfeng.sample.advice.exception.PageNotFoundException;
 import com.junfeng.sample.dto.CustomerRequest;
 import com.junfeng.sample.entity.Address;
@@ -37,7 +38,7 @@ public class CustomerService {
 
     //Function to create new customer record in database
     @Transactional(rollbackOn = Exception.class)
-    public Customer addNewCustomer(CustomerRequest customerRequest) throws DuplicateCustomerException {
+    public Customer addNewCustomer(CustomerRequest customerRequest) throws DuplicateCustomerException, InvalidAddressException {
 
         Customer customer = new Customer(customerRequest.getName(), customerRequest.getEmail(),
                 customerRequest.getContactNo(),customerRequest.getDob());
@@ -54,6 +55,9 @@ public class CustomerService {
 
         //Save customer address
         Address address = customerRequest.getAddress();
+        if(address == null){
+            throw new InvalidAddressException("Invalid address");
+        }
         address.setCustomer(customer);
 
         this.addressService.addAddress(address);

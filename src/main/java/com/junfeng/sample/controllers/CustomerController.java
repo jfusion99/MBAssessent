@@ -2,6 +2,7 @@ package com.junfeng.sample.controllers;
 
 import com.junfeng.sample.advice.exception.CustomerNotFoundException;
 import com.junfeng.sample.advice.exception.DuplicateCustomerException;
+import com.junfeng.sample.advice.exception.InvalidAddressException;
 import com.junfeng.sample.advice.exception.PageNotFoundException;
 import com.junfeng.sample.dto.CustomerRequest;
 import com.junfeng.sample.entity.Customer;
@@ -35,15 +36,17 @@ public class CustomerController {
 
     //Function to add new customer
     @PostMapping
-    public ResponseEntity<Customer> registerNewCustomer(@RequestBody @Valid CustomerRequest customer) throws DuplicateCustomerException {
+    public ResponseEntity<Customer> registerNewCustomer(@RequestBody @Valid CustomerRequest customer) throws DuplicateCustomerException, InvalidAddressException {
 
         return new ResponseEntity<>(customerService.addNewCustomer(customer), HttpStatus.CREATED);
     }
 
     //Function to delete existing customer
     @DeleteMapping(path = "{customerId}")
-    public void deleteCustomer(@PathVariable("customerId") Long customerId) throws CustomerNotFoundException {
+    public String deleteCustomer(@PathVariable("customerId") Long customerId) throws CustomerNotFoundException {
         customerService.deleteCustomer(customerId);
+
+        return "{}";
     }
 
     //Function to update customer's details

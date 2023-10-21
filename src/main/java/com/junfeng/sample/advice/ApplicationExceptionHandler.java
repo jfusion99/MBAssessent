@@ -2,6 +2,7 @@ package com.junfeng.sample.advice;
 
 import com.junfeng.sample.advice.exception.CustomerNotFoundException;
 import com.junfeng.sample.advice.exception.DuplicateCustomerException;
+import com.junfeng.sample.advice.exception.InvalidAddressException;
 import com.junfeng.sample.advice.exception.PageNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -39,6 +40,16 @@ public class ApplicationExceptionHandler {
         return errorMap;
     }
 
+    //Handle exception assertion error
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(AssertionError.class)
+    public Map<String,String> handleAssertionException(AssertionError ex){
+        Map<String,String> errorMap = new HashMap<>();
+        errorMap.put("Error Message",ex.getMessage());
+
+        return errorMap;
+    }
+
     //Handle exception where API creating duplicate customer
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(DuplicateCustomerException.class)
@@ -53,6 +64,16 @@ public class ApplicationExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(PageNotFoundException.class)
     public Map<String,String> handlePageNotFoundException(PageNotFoundException ex){
+        Map<String,String> errorMap = new HashMap<>();
+        errorMap.put("Error Input",ex.getMessage());
+
+        return errorMap;
+    }
+
+    //Handle exception where API detect customer address is null
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(InvalidAddressException.class)
+    public Map<String,String> handleInvalidAddressException(InvalidAddressException ex){
         Map<String,String> errorMap = new HashMap<>();
         errorMap.put("Error Input",ex.getMessage());
 
